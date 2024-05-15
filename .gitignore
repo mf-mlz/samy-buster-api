@@ -1,0 +1,6 @@
+
+/config/database.php
+/config/.env
+/api/.htaccess
+/logs/
+/vendor/
