@@ -6,14 +6,14 @@ require_once './buys/buys.php';
 
 function createTicketBuy($pdo)
 {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-        /* Verify key _POST */
+        /* Verify key _GET */
         $required_fields = ['id_buy'];
-        $id_buy = $_POST['id_buy'] ?? null;
+        $id_buy = $_GET['id_buy'] ?? null;
 
         /* Verify Data Complete */
-        $verifyData = verifyData($required_fields, $_POST);
+        $verifyData = verifyData($required_fields, $_GET);
 
         if ($verifyData) {
             http_response_code(400);
@@ -111,7 +111,7 @@ function createTicketBuy($pdo)
 
             header('Content-Type: application/pdf');
             header('Content-Disposition: attachment; filename="ticket_compra.pdf"');
-            $pdf->Output('Ticket', "D");
+            $pdf->Output('ticketCompra', "I");
 
         
         } else {

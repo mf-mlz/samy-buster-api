@@ -11,7 +11,7 @@ function routeApi($pdo)
     $routeGet = strstr($rute[3], '?', true);
     $jwtAuthorization = getTokenFromHeader();
     $route = $routeGet ? $routeGet : $rute[3];
-    if ($route !== 'registerUser' && $route !== 'loginUser') {
+    if ($route !== 'registerUser' && $route !== 'loginUser' && $route !== 'createTicketBuy') {
 
         if (!$jwtAuthorization) {
             http_response_code(401);
