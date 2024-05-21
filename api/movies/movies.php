@@ -355,7 +355,6 @@ function editMovie($pdo)
         $stmt->bindParam(':price', $data['price']);
         $stmt->execute();
 
-        print_r($stmt->rowCount());
 
         if ($stmt->rowCount()) {
             http_response_code(201);

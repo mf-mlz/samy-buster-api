@@ -1,9 +1,17 @@
 <?php
 require_once './functions.php';
+require_once '../vendor/autoload.php';
+use Dotenv\Dotenv;
 
 /* Method POST  */
 function loginUser($pdo)
 {
+
+    $rootPath = dirname(__DIR__, 2); 
+    $dotenv = Dotenv::createImmutable($rootPath);
+    $dotenv->load();
+    $SECRET = $_ENV['SECRET'];
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         /* Verify key _POST */
@@ -28,7 +36,7 @@ function loginUser($pdo)
             /* Verify Password */
             $verifyPassword = passwordVerify($password, $user['password']);
             if ($verifyPassword) {
-                $token = generateSessionToken($user, JWTSECRET);
+                $token = generateSessionToken($user, $SECRET);
                 $data = array();
                 $data['token'] = $token;
                 $data['id'] = $user['id'];

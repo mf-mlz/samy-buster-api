@@ -4,9 +4,17 @@ require_once './movies/movies.php';
 require_once './buys/buys.php';
 require_once './jtw.php';
 require_once './tcpdf.php';
+require_once '../vendor/autoload.php';
+use Dotenv\Dotenv;
 
 function routeApi($pdo)
 {
+    
+    $rootPath = realpath(dirname(__DIR__));
+    $dotenv = Dotenv::createImmutable($rootPath);
+    $dotenv->load();
+    $SECRET = $_ENV['SECRET'];
+    
     $rute = explode('/', $_SERVER['REQUEST_URI']);
     $routeGet = strstr($rute[3], '?', true);
     $jwtAuthorization = getTokenFromHeader();
@@ -19,7 +27,7 @@ function routeApi($pdo)
             exit;
         }
 
-        $decodeJWT = verifyJWT($jwtAuthorization, JWTSECRET, ['HS256']);
+        $decodeJWT = verifyJWT($jwtAuthorization, $SECRET, ['HS256']);
         if ($decodeJWT === null) {
             http_response_code(401);
             echo json_encode(["message" => "Token Inválido"]);
